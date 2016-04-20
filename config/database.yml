@@ -7,7 +7,7 @@
 default: &default
   adapter: postgresql
   database: db/development
-  username: postgres
+  username: lindsay
   password: password
   host: localhost
   pool: 5
