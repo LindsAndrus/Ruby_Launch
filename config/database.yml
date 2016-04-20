@@ -8,8 +8,8 @@ default: &default
   adapter: postgresql
   database: db/development
   username: lindsay
-  password: password
   host: localhost
+  port: 5432
   pool: 5
   timeout: 5000
 
