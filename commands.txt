@@ -1,0 +1,42 @@
+rails new Secrets
+
+rails g controller Sessions
+
+rails g scaffold User name:string email:string password:digest
+
+rails g scaffold Secret secret:string
+
+rails g model Like
+
+rake db:migrate
+
+rails g migration addMtoM
+
+// addMtoM
+add_column :like, :user_id, :integer
+add_column :like, :secret_id, :integer
+
+rake db:migrate
+
+// Users
+has_secure_password
+EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]+)\z/i
+has_many :likes
+has_many :secrets, through: :likes
+validates :name, :email, :password, presence: true
+validates :email, uniqueness: {case_sensitive: false}, format: {with: EMAIL_REGEX}
+
+// Secrets
+has_many :likes
+has_many :users, through: :likes
+validates :secret, length: {minimum: 5}
+
+// Likes
+belongs_to :user
+belongs_to :secret
+
+user1 = User.create(name:"Lindsay", email:"Linds@email.com", password:"password")
+
+secret1 = Secret.create(secret:"I want a job")
+
+like1 = Like.create(user:User.first, secret:Secret.first)
