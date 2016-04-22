@@ -1,3 +1,7 @@
+<a href="/users">All Users</a>
+<a href="/profiles">Dashboard</a>
+<a href="/sessions/<%= session[:id] %>" data-method="delete">Log Out</a>
+
 <h2>Users you may connect with:</h2>
 
 <table>
@@ -8,7 +12,7 @@
   <% @users.each do |person| %>
     <tr>
       <td><a href="/users/<%= person.id %>"><%= person.name %></a></td>
-      <td><a href="/profiles/new">Invite</a></td>
+      <td><a href="/profiles/new/<%= person.id %>">Invite</a></td>
     </tr>
   <% end %>
 </table>

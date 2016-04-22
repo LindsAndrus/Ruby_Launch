@@ -1,4 +1,5 @@
 <a href="/users">All Users</a>
+<a href="/profiles">Dashboard</a>
 <a href="/sessions/<%= session[:id] %>" data-method="delete">Log Out</a>
 
 <h2>Hello <%= @user.name %></h2>
@@ -13,7 +14,7 @@
 <textarea>
 <% if @networks
   @networks.each do |network| %>
-<%= network.name %>
+<%= network.associate_id %>
 <% end
   end %>
 </textarea>
@@ -28,8 +29,8 @@
   <% if @invites
     @invites.each do |invite| %>
   <tr>
-    <td><%= invite.name %></td>
-    <td></td>
+    <td><%= invite.user_id %></td>
+    <td><a href="/users/new/<%= invite.user_id %>">Accept</a></td>
   </tr>
   <% end
  end %>

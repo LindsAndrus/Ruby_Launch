@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources 'users'
   resources 'profiles'
+  get '/profiles/new/:id' => 'profiles#new'
+  get '/users/new/:id' => 'users#new'
   post '/sessions' => 'sessions#create'
   get '/sessions/new' => 'sessions#new'
   delete '/sessions/:id' => 'sessions#destroy'

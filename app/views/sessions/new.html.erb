@@ -17,3 +17,7 @@
   Description:<input type="text" name="description"><br>
   <input type="submit" name="submit" value="Register">
 </form>
+
+<% if flash[:errors] %>
+<%= flash[:errors] %>
+<% end %>
