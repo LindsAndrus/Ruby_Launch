@@ -1,16 +1,16 @@
 class SessionsController < ApplicationController
-
+  def index
+  end
   def new
+    
   end
   def create
-    @currUser = User.find_by_email(params[:email])
-    puts @currUser.inspect
-    if @currUser.password_digest && @currUser.authenticate(params[:password])
-      session[:user_id] = @currUser.id
-      redirect_to @currUser
+    @user = User.find_by_email(params[:email])
+    if @user && @user.authenticate(params[:password])
+      session[:id] = @user.id
+      redirect_to '/profiles'
     else
-      flash[:errors] = @currUser.errors.full_messages
-      redirect_to new_session_path
+      redirect_to '/'
     end
   end
 

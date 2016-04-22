@@ -11,11 +11,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
-gem 'coffee-script-source'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
-gem 'sqlite3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -26,21 +23,29 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'hirb'
-
-gem 'spring',  group: :development
-
-gem 'rename'
-
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-group :text, :development do
-  gem 'rspec-rails'
-  gem 'database_cleaner'
+
+gem 'hirb'
+
+gem 'simple_form'
+
+gem 'spring',        group: :development
+gem 'rename'
+
+group :test, :development do
+ gem 'rspec-rails'
+ gem 'database_cleaner'
 end
 group :test do
-  gem 'capybara'
+ gem 'capybara'
 end
+
+# Use Unicorn as the app server
+# gem 'unicorn'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

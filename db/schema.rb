@@ -11,32 +11,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418204459) do
+ActiveRecord::Schema.define(version: 20160422173948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "likes", force: :cascade do |t|
+  create_table "invitations", force: :cascade do |t|
+    t.integer  "profile_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
-    t.integer  "secret_id"
+    t.integer  "invitee_id"
   end
 
-  create_table "secrets", force: :cascade do |t|
-    t.string   "secret"
+  add_index "invitations", ["profile_id"], name: "index_invitations_on_profile_id", using: :btree
+  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id", using: :btree
+
+  create_table "networks", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "user_id"
+    t.integer  "associate_id"
+  end
+
+  add_index "networks", ["profile_id"], name: "index_networks_on_profile_id", using: :btree
+  add_index "networks", ["user_id"], name: "index_networks_on_user_id", using: :btree
+
+  create_table "profiles", force: :cascade do |t|
+    t.text     "profile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
   end
+
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
+    t.text     "description"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "secret_id"
   end
 
+  add_foreign_key "invitations", "profiles"
+  add_foreign_key "invitations", "users"
+  add_foreign_key "networks", "profiles"
+  add_foreign_key "networks", "users"
+  add_foreign_key "profiles", "users"
 end

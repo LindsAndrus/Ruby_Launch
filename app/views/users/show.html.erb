@@ -1,18 +1,6 @@
-<p id="notice"><%= notice %></p>
-<%= link_to 'Log Out', '/sessions/destroy', method: :delete, data: { confirm: 'Are you sure?' } %>
+<a href="/users">All Users</a>
+<a href="/sessions/<%= session[:id] %>" data-method="delete">Log Out</a>
 
-<br>
-<%= link_to 'All Secrets', secrets_path %>
+<h2>Hello <%= @user.name %></h2>
 
-<h2>Hi <%= @user.name %></h2>
-
-<%= link_to 'Create New Secret', new_secret_path %>
-
-<a href="/user/<%= @user.id %>"></a>
-<br>
-<h3>Your Secrets:</h3>
-<% @userSecrets.each do |secret|%>
-<%= secret.secret %>
-<% end %>
-<br>
-<h3>Secrets you've Liked</h3>
+<p>"<%= @user.description %>"</p>

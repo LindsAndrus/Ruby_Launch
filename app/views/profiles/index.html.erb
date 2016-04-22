@@ -1,0 +1,36 @@
+<a href="/users">All Users</a>
+<a href="/sessions/<%= session[:id] %>" data-method="delete">Log Out</a>
+
+<h2>Hello <%= @user.name %></h2>
+
+<h4>Here is your profile description:</h4>
+
+<p>"<%= @user.description %>"</p>
+
+<br>
+<h4>Your Professional Network:</h4>
+
+<textarea>
+<% if @networks
+  @networks.each do |network| %>
+<%= network.name %>
+<% end
+  end %>
+</textarea>
+
+<h4>Your pending Invitations:</h4>
+<h6>The following people have asked you to be in their network:</h6>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Action</th>
+  </tr>
+  <% if @invites
+    @invites.each do |invite| %>
+  <tr>
+    <td><%= invite.name %></td>
+    <td></td>
+  </tr>
+  <% end
+ end %>
+</table>

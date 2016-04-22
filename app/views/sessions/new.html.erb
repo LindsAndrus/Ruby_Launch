@@ -1,14 +1,19 @@
 <h2>Welcome</h2>
 
 <form action="/sessions" method="post">
-  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
-  Email: <input type="text" name="email"><br>
-  Password: <input type="password" name="password"><br>
-  <input type="submit" name="submit" value="Submit">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  Email:<input type="text" name="email"><br>
+  Password:<input type="password" name="password"><br>
+  <input type="submit" name="submit" value="Log In">
 </form>
-
-<% if flash[:errors] %>
-
-<%= flash[:errors] %>
-
-<% end %>
+<br>
+<form action="/users" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  Name:<input type="text" name="name"><br>
+  Email:<input type="text" name="email"><br>
+  *Password must be at least 8 characters*<br>
+  Password:<input type="password" name="password"><br>
+  Confirm Password:<input type="password" name="confirm_password"><br>
+  Description:<input type="text" name="description"><br>
+  <input type="submit" name="submit" value="Register">
+</form>

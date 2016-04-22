@@ -1,82 +1,47 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  # GET /users
-  # GET /users.json
   def index
-    @users = User.all
+    @users = User.where.not(id:session[:id])
   end
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    @userSecrets = Secret.where(user_id:session[:user_id])
-    # puts @userSecrets[0].id
-    @likes = Like.where(secret_id:@userSecrets[0].id)
-  end
-
-  # GET /users/new
   def new
-    @user = User.new
   end
 
-  # GET /users/1/edit
-  def edit
+  def show
+    @user = User.find(session[:id])
+    @networks = Network.where(user_id:session[:id])
+    @invites = Invitation.where(invitee_id:session[:id])
   end
-
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        session[:id] = @user.id
-        format.html { redirect_to @user }
-        # format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        # format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /users/1
-  # DELETE /users/1.json
-  # def destroy
-  #   @user.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
 
   def destroy
-    reset_session
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  def edit
+    @user = User.find(session[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  def create
+    @user = User.create(name:params[:name], email:params[:email], password:params[:password], description:params[:description])
+    if @user
+      session[:id] = @user.id
+      @profile = Profile.create(user_id:session[:id])
+      redirect_to @user
+    else
+      redirect_to '/'
     end
+  end
+  def update
+    if Location.find_by_city(params[:city]) && Location.find_by_state(params[:state])
+      @userLoc = Location.find_by_city(params[:city])
+    else
+      @userLoc = Location.create(city:params[:city], state:params[:state])
+    end
+    @upUser = User.update(session[:id], first_name:params[:first_name], last_name:params[:last_name], email:params[:email], location_id:@userLoc.id)
+    if @upUser
+      puts @upUser.errors.full_messages
+      redirect_to @upUser
+    else
+      puts @upUser.errors.full_messages
+      redirect_to @upUser
+    end
+  end
 end
